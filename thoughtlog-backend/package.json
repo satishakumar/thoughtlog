@@ -1,0 +1,25 @@
+{
+  "name": "thoughtlog",
+  "version": "1.0.0",
+  "description": "Real time application share thoughts",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "'NA'"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "cors": "^2.8.3",
+    "express": "^4.15.2",
+    "mongoose": "^4.9.7",
+    "socket.io": "^1.7.3"
+  },
+  "keywords": [
+    "'NA'"
+  ],
+  "author": "Satishakumar Awati",
+  "license": "ISC"
+}

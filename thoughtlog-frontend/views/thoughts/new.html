@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-sm-12">
+           <h4>Add Thought</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default text-left">
+        <div class="panel-body">
+           <form name="form" ng-submit="vm.ThoughtCreate()" role="form" class="form-inline">
+                <div class="form-group" ng-class="{ 'has-error': form.description.$dirty && form.description.$error.required }">
+                    <textarea name="description" id="description" class="form-control col-md-12" ng-model="vm.thought.description" style="min-width: 100%; max-width: 100%; margin: 0px; width: 735px; height: 82px;" rows="3" placeholder="Everything I think, I write down here..!" required  ></textarea>
+
+                    <span ng-show="form.description.$dirty && form.description.$error.required" class="help-block">Thought is required</span>
+                </div>
+                <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary"><span class="glyphicon glyphicon glyphicon-plus"></span> Thought</button>
+            </form>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+           <h4>Thoughts</h4>
+    </div>
+</div>
+<div class="row" id="thoughts">
+    <div class="col-sm-12">
+      <div class="panel panel-default text-left">
+        <div class="panel-body" ng-repeat="thought in thoughts | orderBy: '-created_at'">
+           <div class="row">
+                <div class="col-sm-12">
+                  <div class="panel panel-default text-left">
+                    <div class="panel-body">
+                      <p><b>{{thought.created_by}}</b> : {{thought.description}} <b><sub style="float:right">{{thought.created_at | date:'dd/MM/yyyy, HH:mm:ss a' : 'IST'}}</sub></b></p>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    socket = io('http://localhost:8021/');
+    socket.on('connect', function (){
+      socket.emit('join', {
+        channel: "notifications",
+        username: currentUser.username
+      });
+
+      socket.on('notifications', function (notification){
+        if(notification.type=='thought'){
+          var scope = angular.element("#thoughts").scope();
+          scope.$apply(function(){
+            scope.thoughts.push(notification.thoughtHash)
+          });
+        }
+      });
+
+    });
+  })
+ 
+</script>
