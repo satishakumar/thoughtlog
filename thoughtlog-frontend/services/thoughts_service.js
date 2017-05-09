@@ -5,8 +5,8 @@
         .module('app')
         .factory('ThoughtsService', ThoughtsService);
 
-    ThoughtsService.$inject = ['$http'];
-    function ThoughtsService($http) {
+    ThoughtsService.$inject = ['$http','CONSTANTS'];
+    function ThoughtsService($http,CONSTANTS) {
         var service = {};
 
         service.GetAll = GetAll;
@@ -19,15 +19,15 @@
         return service;
 
         function GetAll() {
-            return $http.get('http://localhost:8021/api/thoughts').then(handleSuccess, handleError('Error getting all thoughts'));
+            return $http.get(CONSTANTS.REST_URL+'/api/thoughts').then(handleSuccess, handleError('Error getting all thoughts'));
         }
 
         function GetById(id) {
-            return $http.get('/api/thoughts/' + id).then(handleSuccess, handleError('Error getting user by id'));
+            return $http.get(CONSTANTS.REST_URL+'/api/thoughts/' + id).then(handleSuccess, handleError('Error getting user by id'));
         }
 
         function GetByUsername(username) {
-            return $http.get('/api/thoughts/' + username).then(handleSuccess, handleError('Error getting user by username'));
+            return $http.get(CONSTANTS.REST_URL+'/api/thoughts/' + username).then(handleSuccess, handleError('Error getting user by username'));
         }
 
         function Create(thought, currentUser) {
@@ -37,25 +37,18 @@
             //         'Content-Type': 'application/json;charset=utf-8;'
             //     }
             // }
-            // var data = thought;
-            // return $http.post(url, data, config).then(function(res){
-            //  handleSuccess(res)
-            // }, 
-            // function(error){
-            //     handleError(error)
-            // });
 
             // var parameter = JSON.stringify({thought : {description : thought.description}});
             thought.created_by = currentUser.username
-            return $http.post('http://localhost:8021/api/thoughts', thought).then(handleSuccess({data:true}), handleError('Error adding thought'));
+            return $http.post(CONSTANTS.REST_URL+'/api/thoughts', thought).then(handleSuccess({data:true}), handleError('Error adding thought'));
         }
 
         function Update(user) {
-            return $http.put('/api/thoughts/' + user.id, user).then(handleSuccess, handleError('Error updating user'));
+            return $http.put(CONSTANTS.REST_URL+'/api/thoughts/' + user.id, user).then(handleSuccess, handleError('Error updating user'));
         }
 
         function Delete(id) {
-            return $http.delete('/api/thoughts/' + id).then(handleSuccess, handleError('Error deleting user'));
+            return $http.delete(CONSTANTS.REST_URL+'/api/thoughts/' + id).then(handleSuccess, handleError('Error deleting user'));
         }
 
         // private functions
