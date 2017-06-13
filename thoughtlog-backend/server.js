@@ -8,7 +8,9 @@ var cors = require("cors");
 var config = require("./config/environment")();
 
 // Mongo Connect
-mongoose.connect('mongodb://localhost/thoughtlog');
+mongoose.connect('mongodb://node:12345@localhost/thoughtlog');
+// mongoose.connect('mongodb://root:lwr8I6MBpEHC@ec2-35-154-178-237.ap-south-1.compute.amazonaws.com:27017/thoughtlog');
+
 var db = mongoose.connection;
 
 // Models
