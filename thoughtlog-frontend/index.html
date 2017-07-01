@@ -42,10 +42,11 @@
     <!-- <div class="col-sm-1 sidenav">
       <p><a href="#">Link</a></p>
     </div> -->
-    <div class="col-sm-8 col-md-8 text-left"> 
+    <div class="text-left container-fluid "> 
         <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
         <div ng-view></div>
     </div>
+      <!--
     <div class="col-sm-4 col-md-4 sidenav">
       <div class="row well">
         <h4>Shared thoughts</h4>
@@ -61,6 +62,7 @@
         </div>
       </div>
     </div>
+-->
   </div>
 </div>
 
