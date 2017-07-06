@@ -1,11 +1,11 @@
 var config = {
     local: {
         mode: 'local',
-        port: 8021
+        port: 9000
     },
     production: {
         mode: 'production',
-        port: 8021
+        port: 9000
     }
 }
 module.exports = function(mode) {
