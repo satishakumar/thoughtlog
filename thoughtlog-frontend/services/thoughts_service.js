@@ -31,7 +31,7 @@
         }
 
         function Create(thought, currentUser) {
-            // var url = 'http://localhost:8021/api/thoughts';
+            // var url = 'http://localhost:9000/api/thoughts';
             // var config = {
             //     headers : {
             //         'Content-Type': 'application/json;charset=utf-8;'

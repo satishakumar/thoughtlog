@@ -51,7 +51,7 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
-    // socket = io('http://localhost:8021/');
+    // socket = io('http://localhost:9000/');
     socket = io('http://ec2-35-154-178-237.ap-south-1.compute.amazonaws.com');
     socket.on('connect', function (){
       socket.emit('join', {
