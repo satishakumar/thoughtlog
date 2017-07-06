@@ -26,3 +26,11 @@ var User = module.exports = mongoose.model('User', userSchema);
 module.exports.getUsers = function(callback, limit){
 	User.find(callback).limit(limit);
 }
+
+module.exports.createUser = function(callback,json){
+	var user = new User({
+		username : json.username,
+		password : json.password
+	});
+	user.save(callback);
+}

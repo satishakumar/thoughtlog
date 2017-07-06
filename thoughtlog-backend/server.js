@@ -8,7 +8,9 @@ var cors = require("cors");
 var config = require("./config/environment")();
 
 // Mongo Connect
-mongoose.connect('mongodb://node:12345@localhost/thoughtlog');
+// mongoose.connect('mongodb://node:12345@localhost/thoughtlog');
+mongoose.connect('mongodb://localhost/thoughtlog');
+
 // mongoose.connect('mongodb://root:lwr8I6MBpEHC@ec2-35-154-178-237.ap-south-1.compute.amazonaws.com:27017/thoughtlog');
 
 var db = mongoose.connection;
@@ -38,13 +40,13 @@ var io = require('socket.io').listen(server);
 io.on('connection', function(socket){
   	
   	socket.on('join', function (data) {
-  		console.log('User connected : ' +data.username);
+  		// console.log('User connected : ' +data.username);
 		socket.join(data.channel);
 		socket.broadcast.to(data.channel).emit('notifications', {username: data.username, type: 'user'});
 	});
 
 	socket.on('newThought', function (data) {
-  		console.log('New thought posted : ');
+  		// console.log('New thought posted : ');
 		// io.sockets.in(socket.channelname).emit('notifications', {thoughtHash: data.thoughtHash, type:'thought'});
 		socket.broadcast.to(data.channel).emit('notifications', {thoughtHash: data.thoughtHash, type:'thought'});
 	});

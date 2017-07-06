@@ -33,3 +33,12 @@ module.exports.createThought = function(callback,json){
 	});
 	thought.save(callback);
 }
+
+module.exports.deleteThought = function(callback,_id){
+
+	Thought.findById(_id, function (err, thought) {
+		if(!err && thought){
+			thought.remove(callback);
+		}
+	});
+}

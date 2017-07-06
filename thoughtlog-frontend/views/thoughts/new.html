@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-sm-12">
-           <h4>Add Thought</h4>
+           <h4><span class='glyphicon glyphicon-pencil'></span> Add Thought</h4>
     </div>
 </div>
 <div class="row">
@@ -28,15 +28,19 @@
     <div class="col-sm-12">
       <div class=" panel-default text-left">
         <div class="panel-body" ng-repeat="thought in thoughts | orderBy: '-created_at'">
-           <div class="row">
+           <div class="row" id="thought_{{thought._id}}">
                 <div class="col-sm-12">
                   <div class="panel panel-default text-left">
                     <div class="panel-body">
-                       <p><b><sub style="float:left">{{thought.created_at | date:'mediumDate' : 'IST'}} {{thought.created_by}} </sub>  </b> 
+                       <p><b><sub style="float:left">{{thought.created_at | date:'yyyy-MM-dd @ h:mma' : 'IST'}} by {{thought.created_by}} </sub>
+                        <span class="glyphicon glyphicon-remove" ng-click="vm.deleteThought(thought._id)" style="float:right"></span>
+                       </b> 
                       </p>
                       <p>
                        {{thought.description}} </p>
+
                     </div>
+
                   </div>
                 </div>
             </div>
@@ -47,7 +51,8 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
-    socket = io('http://localhost:8021/');
+    // socket = io('http://localhost:8021/');
+    socket = io('http://ec2-35-154-178-237.ap-south-1.compute.amazonaws.com');
     socket.on('connect', function (){
       socket.emit('join', {
         channel: "notifications",

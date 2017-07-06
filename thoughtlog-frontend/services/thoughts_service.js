@@ -47,8 +47,8 @@
             return $http.put(CONSTANTS.REST_URL+'/api/thoughts/' + user.id, user).then(handleSuccess, handleError('Error updating user'));
         }
 
-        function Delete(id) {
-            return $http.delete(CONSTANTS.REST_URL+'/api/thoughts/' + id).then(handleSuccess, handleError('Error deleting user'));
+        function Delete(_id) {
+            return $http.delete(CONSTANTS.REST_URL+'/api/thoughts/'+_id).then(handleSuccess, handleError('Error deleting user'));
         }
 
         // private functions

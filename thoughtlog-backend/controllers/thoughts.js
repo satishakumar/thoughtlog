@@ -11,14 +11,21 @@ router.get('/', function(req, res){
 });
 
 router.post('/', function(req, res){
-	console.log(req.body)
 	Thought.createThought(function(err, resp) {
 		if (err) {
 			throw err;
 		}
-		console.log(resp)
 		res.json(resp);
 	}, req.body);
+});
+
+router.delete('/:_id',function(req,res){
+	Thought.deleteThought(function(err, resp) {
+		if (err) {
+			throw err;
+		}
+		res.json(resp);
+	}, req.params._id);
 });
 
 module.exports = router
