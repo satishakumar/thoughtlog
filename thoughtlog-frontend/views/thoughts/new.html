@@ -26,26 +26,14 @@
 </div>
 <div class="row" id="thoughts">
     <div class="col-sm-12">
-      <div class=" panel-default text-left">
-        <div class="panel-body" ng-repeat="thought in thoughts | orderBy: '-created_at'">
-           <div class="row" id="thought_{{thought._id}}">
-                <div class="col-sm-12">
-                  <div class="panel panel-default text-left">
-                    <div class="panel-body">
-                       <p><b><sub style="float:left">{{thought.created_at | date:'yyyy-MM-dd @ h:mma' : 'IST'}} by {{thought.created_by}} </sub>
-                        <span class="glyphicon glyphicon-remove" ng-click="vm.deleteThought(thought._id)" style="float:right"></span>
-                       </b> 
-                      </p>
-                      <p>
-                       {{thought.description}} </p>
-
-                    </div>
-
-                  </div>
-                </div>
-            </div>
+    <div class="list-group row">
+      <div class="list-group-item" ng-repeat="thought in thoughts | orderBy: '-created_at'">
+        <div id="thought_{{thought._id}}">
+          <sub class="list-group-item-heading"><b>{{thought.created_at | date:'yyyy-MM-dd @ h:mma' : 'IST'}} by {{thought.created_by}}</b></sub><span class="glyphicon glyphicon-remove" ng-click="vm.deleteThought(thought._id)" style="float:right" title="Delete thought"></span>
+          <p class="list-group-item-text">{{thought.description}}</p>
         </div>
       </div>
+    </div>
     </div>
 </div>
 
