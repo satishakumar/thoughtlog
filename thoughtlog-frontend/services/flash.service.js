@@ -12,42 +12,30 @@
         service.Success = Success;
         service.Error = Error;
 
-        initService();
-
         return service;
 
-        function initService() {
-            $rootScope.$on('$locationChangeStart', function () {
-                clearFlashMessage();
-            });
-
-            function clearFlashMessage() {
-                var flash = $rootScope.flash;
-                if (flash) {
-                    if (!flash.keepAfterLocationChange) {
-                        delete $rootScope.flash;
-                    } else {
-                        // only keep for a single location change
-                        flash.keepAfterLocationChange = false;
-                    }
-                }
-            }
-        }
-
         function Success(message, keepAfterLocationChange) {
-            $rootScope.flash = {
-                message: message,
-                type: 'success', 
-                keepAfterLocationChange: keepAfterLocationChange
-            };
+            generate(message)
         }
 
         function Error(message, keepAfterLocationChange) {
-            $rootScope.flash = {
-                message: message,
-                type: 'error',
-                keepAfterLocationChange: keepAfterLocationChange
-            };
+            generate(message, 'error')
+        }
+
+        function generate(text, type, layout, timeout) {
+            type = (type === undefined) ? 'success' : type
+            layout = (layout === undefined) ? 'topCenter' : layout
+            timeout = (timeout === undefined) ? 1500 : timeout
+            var n = noty({
+                text        : text,
+                type        : type,
+                dismissQueue: true,
+                modal       : false,
+                maxVisible  : 2,
+                timeout     : timeout,
+                layout      : layout,
+                theme       : 'defaultTheme'
+            });
         }
     }
 
