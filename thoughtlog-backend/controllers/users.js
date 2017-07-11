@@ -28,7 +28,6 @@ router.post('/login', function(req, res){
 
 router.post('/', function(req, res){
 	User.getUserByUsername(function(err, resp) {
-		console.log(resp)
 		if (err) {
 			res.json({success : false, message : "Internal server error!, Please try after sometime."});
 		}
