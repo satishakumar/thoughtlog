@@ -7,25 +7,39 @@ var cors = require("cors");
 
 var config = require("./config/environment")();
 
+// var db = mongoose.connection;
 // Mongo Connect
 // mongoose.connect('mongodb://node:12345@localhost/thoughtlog');
 mongoose.connect('mongodb://localhost/thoughtlog');
-
 // mongoose.connect('mongodb://root:lwr8I6MBpEHC@ec2-35-154-178-237.ap-south-1.compute.amazonaws.com:27017/thoughtlog');
 
-var db = mongoose.connection;
+
+var expressSession = require('express-session');
+var cookieParser = require('cookie-parser'); // the session is stored in a cookie, so we use this to parse it
+
+//TODO : Authentication requests
+var checkAuth = function (req, res, next) {
+	whitelisturls = ['/api/users/login', '/api/users']
+	if (req.session.user_id || (whitelisturls.includes(req.path) && req.method === 'POST')) {
+		next();
+	}else{
+		res.send('You are not authorized to view this page');
+	}
+}
+
+// Middlewares
+app.use(cors({origin:true,credentials: true}));
+app.use(cookieParser());
+app.use(expressSession({secret:'somesecrettokenhere'}));
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+// app.use(checkAuth)
 
 // Models
 Thought = require('./models/thought');
 User = require('./models/user');
 
-// Middlewares
-app.use(cors({origin:true,credentials: true}));
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-
-// Routes
-
+// Controllers
 app.use('/api/thoughts', require('./controllers/thoughts'))
 app.use('/api/users', require('./controllers/users'))
 

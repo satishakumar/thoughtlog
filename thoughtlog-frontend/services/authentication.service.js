@@ -5,8 +5,8 @@
         .module('app')
         .factory('AuthenticationService', AuthenticationService);
 
-    AuthenticationService.$inject = ['$http', '$cookies', '$rootScope', '$timeout', 'UserService'];
-    function AuthenticationService($http, $cookies, $rootScope, $timeout, UserService) {
+    AuthenticationService.$inject = ['$http', '$cookies', '$rootScope', '$timeout', 'UserService','CONSTANTS'];
+    function AuthenticationService($http, $cookies, $rootScope, $timeout, UserService,CONSTANTS) {
         var service = {};
 
         service.Login = Login;
@@ -19,26 +19,36 @@
 
             /* Dummy authentication for testing, uses $timeout to simulate api call
              ----------------------------------------------*/
-            $timeout(function () {
-                var response;
-                UserService.GetByUsername(username)
-                    .then(function (user) {
-                        if (user !== null && user.password === password) {
-                            response = { success: true };
-                        } else {
-                            response = { success: false, message: 'Username or password is incorrect' };
-                        }
-                        callback(response);
-                    });
-            }, 1000);
+            // $timeout(function () {
+            //     var response;
+            //     UserService.GetByUsername(username)
+            //         .then(function (user) {
+            //             if (user !== null && user.password === password) {
+            //                 response = { success: true };
+            //             } else {
+            //                 response = { success: false, message: 'Username or password is incorrect' };
+            //             }
+            //             callback(response);
+            //         });
+            // }, 1000);
 
             /* Use this for real authentication
-             ----------------------------------------------*/
-            //$http.post('/api/authenticate', { username: username, password: password })
-            //    .success(function (response) {
-            //        callback(response);
-            //    });
+            //  ----------------------------------------------*/
+            // $http.post(CONSTANTS.REST_URL+'/api/users/login', { username: username, password: password })
+            //     .success(function (response) {
+            //     callback(response);
+            // });
 
+            $http({
+                method: 'POST',
+                url: CONSTANTS.REST_URL+'/api/users/login',
+                data : { username: username, password: password }
+            }).then(function successCallback(response) {
+                    callback(response.data);
+                }, function errorCallback(response) {
+                    // return response;
+                }
+            );
         }
 
         function SetCredentials(username, password) {

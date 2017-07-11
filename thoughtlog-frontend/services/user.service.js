@@ -5,8 +5,8 @@
         .module('app')
         .factory('UserService', UserService);
 
-    UserService.$inject = ['$http'];
-    function UserService($http) {
+    UserService.$inject = ['$http', 'CONSTANTS'];
+    function UserService($http, CONSTANTS) {
         var service = {};
 
         service.GetAll = GetAll;
@@ -19,27 +19,37 @@
         return service;
 
         function GetAll() {
-            return $http.get('/api/users').then(handleSuccess, handleError('Error getting all users'));
+            return $http.get(CONSTANTS.REST_URL+'/api/users').then(handleSuccess, handleError('Error getting all users'));
         }
 
         function GetById(id) {
-            return $http.get('/api/users/' + id).then(handleSuccess, handleError('Error getting user by id'));
+            return $http.get(CONSTANTS.REST_URL+'/api/users/' + id).then(handleSuccess, handleError('Error getting user by id'));
         }
 
         function GetByUsername(username) {
-            return $http.get('/api/users/' + username).then(handleSuccess, handleError('Error getting user by username'));
+            return $http.get(CONSTANTS.REST_URL+'/api/users/' + username).then(handleSuccess, handleError('Error getting user by username'));
         }
 
         function Create(user) {
-            return $http.post('/api/users', user).then(handleSuccess, handleError('Error creating user'));
+           return $http({
+                method: 'POST',
+                url: CONSTANTS.REST_URL+'/api/users',
+                data : user
+            }).then(function successCallback(response) {
+                    return response;
+                }, function errorCallback(response) {
+                    return response;
+                }
+            );
+            // return $http.post(CONSTANTS.REST_URL+'/api/users', user).then(handleSuccess({data:true}), handleError('Error creating user'));
         }
 
         function Update(user) {
-            return $http.put('/api/users/' + user.id, user).then(handleSuccess, handleError('Error updating user'));
+            return $http.put(CONSTANTS.REST_URL+'/api/users/' + user.id, user).then(handleSuccess, handleError('Error updating user'));
         }
 
         function Delete(id) {
-            return $http.delete('/api/users/' + id).then(handleSuccess, handleError('Error deleting user'));
+            return $http.delete(CONSTANTS.REST_URL+'/api/users/' + id).then(handleSuccess, handleError('Error deleting user'));
         }
 
         // private functions
