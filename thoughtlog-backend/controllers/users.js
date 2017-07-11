@@ -16,7 +16,7 @@ router.post('/login', function(req, res){
 		if (err) {
 			res.json({success : false, message : "Internal server error!, Please try after sometime."});
 		}
-		if(req.body.password == resp.password){
+		if(resp && req.body.password == resp.password){
 			req.session.user_id = resp._id;
 			res.json({success : true});
 		}else{
