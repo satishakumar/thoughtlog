@@ -1,7 +1,7 @@
-Chrome Extension for Crop and Screen Capture
+Chrome Extension forthought log Capture
 ==========================
 
-A simple Google Chrome extension that takes tgat select area of screen and take screenshot
+A simple Google Chrome extension that takes users to thoughtlog
 
 Feel free to fork it and modify.
 
