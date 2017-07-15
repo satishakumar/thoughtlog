@@ -5,13 +5,18 @@
         .module('app')
         .controller('ThoughtsController', ThoughtsController);
 
-    ThoughtsController.$inject = ['ThoughtsService', '$location', '$scope', 'FlashService'];
-    function ThoughtsController(ThoughtsService, $location, $scope, FlashService) {
+    ThoughtsController.$inject = ['ThoughtsService', '$location', '$scope', 'FlashService', '$sce'];
+    function ThoughtsController(ThoughtsService, $location, $scope, FlashService, $sce) {
         var vm = this;
 
         vm.ThoughtCreate = Create;
         vm.getThoughts = getThoughts;
         vm.deleteThought = deleteThought;
+        vm.sanitizeHtml = sanitizeHtml;
+
+        function sanitizeHtml(text) {
+            return $sce.trustAsHtml(text);
+        };
 
         function deleteThought(_id) {
             vm.dataLoading = true;
