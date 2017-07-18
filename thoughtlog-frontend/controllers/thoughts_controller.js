@@ -19,24 +19,27 @@
         };
 
         function deleteThought(_id) {
-            vm.dataLoading = true;
-            ThoughtsService.Delete(_id).then(function (response) {
-                if (response) {
+            var flag = confirm("Are you sure want to delete thought?")
+            if(flag){
+                vm.dataLoading = true;
+                ThoughtsService.Delete(_id).then(function (response) {
+                    if (response) {
 
-                    FlashService.Success('Thought deleted successfully', true);
+                        FlashService.Success('Thought deleted successfully', true);
 
-                    var index = $scope.thoughts.findIndex(function(thought){
-                        return thought._id === _id;
-                    });
+                        var index = $scope.thoughts.findIndex(function(thought){
+                            return thought._id === _id;
+                        });
 
-                    $scope.thoughts.splice(index, 1);
+                        $scope.thoughts.splice(index, 1);
 
-                    vm.dataLoading = false;
-                } else {
-                    FlashService.Error(response.message);
-                    vm.dataLoading = false;
-                }
-            });
+                        vm.dataLoading = false;
+                    } else {
+                        FlashService.Error(response.message);
+                        vm.dataLoading = false;
+                    }
+                });
+            }
         }
 
 
